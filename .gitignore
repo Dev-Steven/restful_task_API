@@ -1,0 +1,5 @@
+# Ignore all listed files
+
+/node_modules
+package-lock.json
+restful_task.zip
