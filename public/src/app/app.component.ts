@@ -8,15 +8,17 @@ import { HttpService } from './http.service';
 })
 export class AppComponent implements OnInit {
   title = 'Restful Tasks API:';
-  tasksTitle = 'All Tasks';
   tasks: any = [];
-  // task: any;
+  specific = [];
+  tasksTitle = 'All Tasks';
+  clickSpecific: boolean;
 
   constructor(private _httpService: HttpService){}
 
   ngOnInit() { 
-    this.getTasksFromServer();
+    // this.getTasksFromServer();
     // this.getTaskFromServer();
+    this.clickSpecific = false;
   }
 
   getTasksFromServer() {
@@ -27,7 +29,13 @@ export class AppComponent implements OnInit {
     })
   }
 
+  onButtonClick(): void { 
+    console.log(`Click event is working`)
+    this.getTasksFromServer();
+  }
+
   getTaskFromServer() {
+    //get task needs an ID find a way to get an id...
     let observable = this._httpService.getTask();
     observable.subscribe(data => {
       console.log("Here is the task!", data);
@@ -53,6 +61,12 @@ export class AppComponent implements OnInit {
     observable.subscribe(data => {
       console.log("Deleting task", data);
     })
+  }
+
+  onButtonClickShow(task: String): void {
+    console.log(`Click event is working to get task`, task);
+    this.specific = task;
+    this.clickSpecific = true;
   }
 
 }

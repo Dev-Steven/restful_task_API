@@ -1,11 +1,18 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-
   <h1>{{title}}</h1>
 </div>
 <h2>{{tasksTitle}}:</h2>
-<p *ngFor = "let task of tasks"> {{task.title}} - {{task.description}}  </p>
 
-<h2>The Third Task:</h2>
-<p> {{tasks[2].title}} - {{tasks[2].description}}</p>
+<!-- maybe grab id from get all tasks button then pass the id to click show button -->
+<p *ngFor = "let task of tasks"> {{task.title}}<button (click)="onButtonClickShow(task)" > Show </button></p>
+<!-- <div *ngIf = "clickSpecific"> -->
+  <h2 *ngIf = "clickSpecific">Full Details</h2>
+  <p>{{specific.title}}</p>
+  <p>{{specific.description}}</p>
+<!-- </div> -->
+<button (click)="onButtonClick()" > Get All Tasks! </button>
+<br>
+<input type="text" name="id" placeholder="Enter an ID">
 
+<button>Find Task!</button>
