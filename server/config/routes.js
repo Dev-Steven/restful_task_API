@@ -3,7 +3,7 @@ const tasks = require('./../controllers/tasks');
 module.exports = function(app) {
 
     // Retrieve all Tasks    
-    app.get('/', function(req, res) {
+    app.get('/tasks', function(req, res) {
         tasks.getTasks(req, res);
     })
 
