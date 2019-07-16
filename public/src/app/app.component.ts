@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from './http.service';
+import { Subscriber } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,19 +8,25 @@ import { HttpService } from './http.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
   title = 'Restful Tasks API:';
-  tasks: Array<Object>;
-  task: any;
-  specific = [];
   tasksTitle = 'All Tasks';
-  clickSpecific: boolean;
+
+  tasks: any;
+  task: any;
   newTask: any;
+  updateTask: any;
+  deleteTask: any;
+  
+  clickSpecific = false;
+  showEdit = false;
 
   constructor(private _httpService: HttpService){}
 
   ngOnInit() { 
-    this.clickSpecific = false;
+    // this.clickSpecific = false;
     this.newTask = {title: "", description: ""};
+    this.updateTask = {title: "", description: ""};
   }
 
   getTasksFromServer() {
@@ -46,13 +53,6 @@ export class AppComponent implements OnInit {
     })
   }
 
-  deleteTaskFromServer() {
-    let observable = this._httpService.deleteTask();
-    observable.subscribe(data => {
-      console.log("Deleting task", data);
-    })
-  }
-
   onButtonClick(): void { 
     console.log(`Click event is working`)
     this.getTasksFromServer();
@@ -64,12 +64,48 @@ export class AppComponent implements OnInit {
     this.clickSpecific = true;
   }
 
-  onSubmit(){
-    console.log('in component')
+  onSubmit() {
+    console.log('in component');
     let observable = this._httpService.addTask(this.newTask);
     observable.subscribe(data => {
-      this.newTask = {title: "", description: ""}
+      this.newTask = {title: "", description: ""};
       console.log("Got our data from posts back", data);
+      this.onButtonClick();
+    })
+  }
+
+  onEditButton(id: String) {
+    let observable = this._httpService.getTask(id);
+    observable.subscribe(data => {
+      console.log("Here is the task!", data);
+      this.updateTask = data;
+    })
+    console.log(`Id is: ${id}`)
+    console.log('Showing edit div...');
+    this.showEdit = true;
+    this.onButtonClick();
+    // this.onSubmitUpdate(id);
+  }
+
+  onSubmitUpdate(id: String) {
+    console.log('In component');
+    console.log(`ID: ${id}`)
+    console.log(`updateTask: ${this.updateTask}`)
+    let observable = this._httpService.updateTask(id, this.updateTask);
+    observable.subscribe(data => {
+      // this.updateTask = {title: data.title, description: ""}
+      console.log("Update Complete!", data);
+      this.updateTask = {title: "", description: ""};
+    })
+
+  }
+
+  onSubmitDelete(id: String){
+    console.log('In component. Id:',id)
+    let observable = this._httpService.deleteTask(id);
+    observable.subscribe(data => {
+      console.log('deleting', data)
+      this.onButtonClick();
     })
   }
 

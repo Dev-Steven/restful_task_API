@@ -21,11 +21,14 @@ module.exports = function(app) {
 
     // Update a task by ID
     app.put('/update/:id', function(req, res) {
+        console.log('In routes')
+        console.log(`ID: ${req.params}`)
         tasks.updateTask(req, res);
     })
 
     // Delete task by ID
     app.delete('/delete/:id', function(req, res) {
+        console.log("Req param:",req.params)
         tasks.deleteTask(req, res);
     })
 }

@@ -10,13 +10,13 @@ module.exports = {
     //   },
 
     getTasks: function(req, res){
-        Task.find({}, function(err, task){
+        Task.find({}, function(err, taskz){
             if(err){
                 console.log('Returned error', err);
                 res.json({message: "Error", error: err});
             }else{
                 // res.json({message: "Success", tasks: task})
-                res.json(task);
+                res.json(taskz);
             }
         })
     },
@@ -43,7 +43,8 @@ module.exports = {
     },
 
     deleteTask: (req, res) => {
-        Task.findByIdAndRemove({ _id: req.params.id })
+        console.log("deleting in task")
+        Task.findByIdAndRemove({_id: req.params.id})
             .then(data => res.json(data))
             .catch(err => res.json(err));
       }

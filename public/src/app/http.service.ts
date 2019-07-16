@@ -28,12 +28,16 @@ export class HttpService {
     return this._http.post('/task', newtask);
   }
 
-  updateTask() {
-    return this._http.get('/update/:id');
+  updateTask(id, updateTask) {
+    console.log('In server')
+    console.log(`ID: ${id}`)
+    console.log(`Update Task: ${updateTask}`)
+    return this._http.put(`/update/${id}`, updateTask);
   }
 
-  deleteTask() {
-    return this._http.get('/delete/:id');
+  deleteTask(id) {
+    console.log('In Service, ID:',id);
+    return this._http.delete(`/delete/${id}`);
   }
 
 }

@@ -1,21 +1,22 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-      <h1>{{title}}</h1>
-      <h2>{{tasksTitle}}:</h2>
-      
-      
-      <p *ngFor = "let task of tasks"> {{task.title}} <button (click)="onButtonClickShow(task._id)" > Show </button></p>
-      <!-- <div *ngIf = "clickSpecific"> -->
-        <h2 *ngIf = "task">Full Details</h2>
-        <p>{{task.title}}</p>
-        <p>{{task.description}}</p>
-        <!-- </div> -->
-        <button (click)="onButtonClick()" > Get All Tasks! </button>
-  </div>
+  <h1>{{title}}</h1>
+  <h2>{{tasksTitle}}:</h2>
+
+  <p *ngFor = "let task of tasks"> 
+    {{task.title}} 
+    <button (click)="onButtonClickShow(task._id)" > Show </button> | <button (click)="onSubmitDelete(task._id)" > Delete </button> | <button (click)="onEditButton(task._id)" > Edit </button>
+  </p>
+  <h2 *ngIf = "task">Full Details</h2>
+  <p>{{task.title}}</p>
+  <p>{{task.description}}</p>
+  <button (click)="onButtonClick()" > Get All Tasks! </button>
+</div>
     
 <br>
 
-<form (submit)="onSubmit()" style="text-align:center">
+<form (submit)="onSubmit()" style="text-align:center; border: 1px solid black; margin: 5px; padding: 10px;">
+  <h2>Add Task</h2>
   <!-- <p>{{newTask | json}}</p> -->
   <label>Task title: 
     <input type="text" name="newTask.title" [(ngModel)] = "newTask.title" />
@@ -25,3 +26,25 @@
     </label>
     <input type="submit" value="Create Task" />
 </form>
+
+<div *ngIf = "showEdit">
+  <form (submit)="onSubmitUpdate(updateTask._id)" style="text-align:center; border: 1px solid black; margin: 5px; padding: 10px;">
+    <h2>Edit Task</h2>
+    <!-- <p>Checker: {{ updateTask | json }}</p> -->
+    <label>Task title:
+      <input type="text" name="updateTask.title" [(ngModel)] = "updateTask.title" />
+    </label>
+  
+    <label>Task description:
+      <input type="text" name="updateTask.description" [(ngModel)] = "updateTask.description" />
+    </label>
+    <input type="submit" value="Update Task" />
+    <!-- <button>Edit</button> -->
+  </form>
+</div>
+
+
+
+
+
+
