@@ -23,12 +23,14 @@ module.exports = {
 
 
     getTask: (req, res) => {
+        console.log('in tasks')
         Task.findOne({ _id: req.params.id })
             .then(data => res.json(data))
             .catch(err => res.json(err));
     },
 
     addTask: (req, res) => {
+        console.log('in tasks')
         Task.create(req.body)
             .then(data => res.json(data))
             .catch(err => res.json(err));

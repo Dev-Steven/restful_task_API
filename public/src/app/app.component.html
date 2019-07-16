@@ -1,18 +1,27 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
-  <h1>{{title}}</h1>
-</div>
-<h2>{{tasksTitle}}:</h2>
-
-<!-- maybe grab id from get all tasks button then pass the id to click show button -->
-<p *ngFor = "let task of tasks"> {{task.title}}<button (click)="onButtonClickShow(task)" > Show </button></p>
-<!-- <div *ngIf = "clickSpecific"> -->
-  <h2 *ngIf = "clickSpecific">Full Details</h2>
-  <p>{{specific.title}}</p>
-  <p>{{specific.description}}</p>
-<!-- </div> -->
-<button (click)="onButtonClick()" > Get All Tasks! </button>
+      <h1>{{title}}</h1>
+      <h2>{{tasksTitle}}:</h2>
+      
+      
+      <p *ngFor = "let task of tasks"> {{task.title}} <button (click)="onButtonClickShow(task._id)" > Show </button></p>
+      <!-- <div *ngIf = "clickSpecific"> -->
+        <h2 *ngIf = "task">Full Details</h2>
+        <p>{{task.title}}</p>
+        <p>{{task.description}}</p>
+        <!-- </div> -->
+        <button (click)="onButtonClick()" > Get All Tasks! </button>
+  </div>
+    
 <br>
-<input type="text" name="id" placeholder="Enter an ID">
 
-<button>Find Task!</button>
+<form (submit)="onSubmit()" style="text-align:center">
+  <!-- <p>{{newTask | json}}</p> -->
+  <label>Task title: 
+    <input type="text" name="newTask.title" [(ngModel)] = "newTask.title" />
+  </label>
+  <label>Task Description: 
+      <input type="text" name="newTask.description" [(ngModel)] = "newTask.description" />
+    </label>
+    <input type="submit" value="Create Task" />
+</form>

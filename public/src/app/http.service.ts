@@ -17,13 +17,15 @@ export class HttpService {
     // observable.subscribe(data => console.log("Got it", data));
   }
 
-  getTask() {
-
-    return this._http.get('/:id');
+  getTask(id) {
+    console.log('In service and id is: ', id)
+    console.log(`Still in service but going to route /task/:${id}`)
+    return this._http.get(`/task/${id}`);
   }
 
-  addTask() {
-    return this._http.get('/create');
+  addTask(newtask) {
+    console.log('inside service')
+    return this._http.post('/task', newtask);
   }
 
   updateTask() {

@@ -8,17 +8,18 @@ import { HttpService } from './http.service';
 })
 export class AppComponent implements OnInit {
   title = 'Restful Tasks API:';
-  tasks: any = [];
+  tasks: Array<Object>;
+  task: any;
   specific = [];
   tasksTitle = 'All Tasks';
   clickSpecific: boolean;
+  newTask: any;
 
   constructor(private _httpService: HttpService){}
 
   ngOnInit() { 
-    // this.getTasksFromServer();
-    // this.getTaskFromServer();
     this.clickSpecific = false;
+    this.newTask = {title: "", description: ""};
   }
 
   getTasksFromServer() {
@@ -29,23 +30,12 @@ export class AppComponent implements OnInit {
     })
   }
 
-  onButtonClick(): void { 
-    console.log(`Click event is working`)
-    this.getTasksFromServer();
-  }
-
-  getTaskFromServer() {
+  getTaskFromServer(id) {
     //get task needs an ID find a way to get an id...
-    let observable = this._httpService.getTask();
+    let observable = this._httpService.getTask(id);
     observable.subscribe(data => {
       console.log("Here is the task!", data);
-    })
-  }
-
-  addTaskFromServer() {
-    let observable = this._httpService.addTask();
-    observable.subscribe(data => {
-      console.log("adding a task...", data);
+      this.task = data;
     })
   }
 
@@ -63,10 +53,24 @@ export class AppComponent implements OnInit {
     })
   }
 
-  onButtonClickShow(task: String): void {
-    console.log(`Click event is working to get task`, task);
-    this.specific = task;
+  onButtonClick(): void { 
+    console.log(`Click event is working`)
+    this.getTasksFromServer();
+  }
+
+  onButtonClickShow(id: String) {
+    console.log(`In component`);
+    this.getTaskFromServer(id);
     this.clickSpecific = true;
+  }
+
+  onSubmit(){
+    console.log('in component')
+    let observable = this._httpService.addTask(this.newTask);
+    observable.subscribe(data => {
+      this.newTask = {title: "", description: ""}
+      console.log("Got our data from posts back", data);
+    })
   }
 
 }
