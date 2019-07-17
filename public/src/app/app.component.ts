@@ -29,14 +29,6 @@ export class AppComponent implements OnInit {
     this.updateTask = {title: "", description: ""};
   }
 
-  getTasksFromServer() {
-    let observable = this._httpService.getTasks();
-    observable.subscribe(data => {
-      this.tasks = data;
-      console.log("Here are our tasks! ", data);
-    })
-  }
-
   getTaskFromServer(id) {
     //get task needs an ID find a way to get an id...
     let observable = this._httpService.getTask(id);
@@ -46,16 +38,14 @@ export class AppComponent implements OnInit {
     })
   }
 
-  updateTaskFromServer() {
-    let observable = this._httpService.updateTask();
-    observable.subscribe(data => {
-      console.log("Updating task", data);
-    })
-  }
-
   onButtonClick(): void { 
     console.log(`Click event is working`)
-    this.getTasksFromServer();
+    // this.getTasksFromServer();
+    let observable = this._httpService.getTasks();
+    observable.subscribe(data => {
+      this.tasks = data;
+      console.log("Here are our tasks! ", data);
+    })
   }
 
   onButtonClickShow(id: String) {
@@ -96,6 +86,8 @@ export class AppComponent implements OnInit {
       // this.updateTask = {title: data.title, description: ""}
       console.log("Update Complete!", data);
       this.updateTask = {title: "", description: ""};
+      this.onButtonClick();
+
     })
 
   }
